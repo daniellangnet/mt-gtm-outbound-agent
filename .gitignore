@@ -12,6 +12,9 @@ venv/
 env/
 .env/
 
+# Dotenv
+.env
+
 # IDE-specific files
 .idea/
 .vscode/
