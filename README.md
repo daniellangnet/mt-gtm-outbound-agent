@@ -21,7 +21,7 @@ These instructions are focused on macOS and show how to run everything from the 
      - `cp .env.sample .env`
    - Update `.env` with your Temporal settings (address, namespace, API key, task queue, TLS flag, etc.).
 
-## Running
+## Developing
 All run commands below are executed from the repo root with the virtual environment activated.
 
 - Start local Temporal Server
@@ -33,6 +33,10 @@ All run commands below are executed from the repo root with the virtual environm
 
 - Run the sample workflow (invokes SayHello via the client):
   - `python -m scripts.run_workflow`
+
+## Deploying
+- We use Fly.io for hosting
+- Install using `brew install flyctl`
 
 You should see logs indicating a connection to the Temporal service, then worker activity and workflow execution. The workflow result will be printed to the console.
 
