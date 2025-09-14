@@ -1,4 +1,4 @@
-# MT GTM Outbound Agent
+# GTM Outbound Agent
 
 This repository contains a simple Temporal worker and workflow that we use for outbound GTM purposes. 
 
@@ -23,6 +23,10 @@ These instructions are focused on macOS and show how to run everything from the 
 
 ## Running
 All run commands below are executed from the repo root with the virtual environment activated.
+
+- Start local Temporal Server
+  - Use this method for local development. Make sure to use the localhost setings in your env file
+  - `temporal server start-dev`
 
 - Start the worker (listens on your configured task queue):
   - `python -m scripts.run_worker`
