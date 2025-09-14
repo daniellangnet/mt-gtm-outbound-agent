@@ -8,6 +8,7 @@ with workflow.unsafe.imports_passed_through():
 class SayHello:
     @workflow.run
     async def run(self, name: str) -> str:
+        print("Executing workflow")
         return await workflow.execute_activity(
             say_hello, name, start_to_close_timeout=timedelta(seconds=5)
         )

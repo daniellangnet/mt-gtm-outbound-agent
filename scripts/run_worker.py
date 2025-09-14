@@ -32,7 +32,7 @@ async def start_worker():
     client, temporal_task_queue = await connect_temporal()
 
     async with Worker(client, task_queue=temporal_task_queue, workflows=[SayHello], activities=[say_hello]):
-        print("hello!")
+        print("Worker has connected to Temporal!")
         # If we got here, the worker has connected and started pollers
         ready.set()
         # Block forever; shutdown is handled by Fly sending a signal
