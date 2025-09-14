@@ -1,0 +1,19 @@
+[project]
+name = "mt-gtm-outbound-agent"
+version = "0.1.0"
+description = "Outbound AI agent for our GTM efforts"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (>=0.116.1,<0.117.0)",
+    "uvicorn (>=0.35.0,<0.36.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "temporalio (>=1.17.0,<2.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false

@@ -10,12 +10,8 @@ These instructions are focused on macOS and show how to run everything from the 
 
 ## Setup
 1. Clone the repo and open the project directory in a terminal.
-2. Create and activate a virtual environment:
-   - Create: `python3 -m venv .venv`
-   - Activate: `source .venv/bin/activate`
-3. Upgrade pip and install dependencies:
-   - `python -m pip install --upgrade pip`
-   - `python -m pip install -r requirements.txt`
+2. Make sure you have `poetry` installed as a package manager
+3. Then run `poetry install` to active the virtual environment and install all the packages
 4. Environment variables:
    - Copy the sample env file and edit values:
      - `cp .env.sample .env`

@@ -1,3 +1,0 @@
-fastapi
-python-dotenv
-temporalio~=1.17.0
