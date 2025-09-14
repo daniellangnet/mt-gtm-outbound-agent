@@ -32,7 +32,6 @@ FROM python:3.12.11-slim-bookworm
 WORKDIR /app
 
 # Copy virtual environment & project files from builder
-#COPY --from=builder /usr/local /usr/local
 COPY --from=builder /app /app
 
 # Set Python options for cleaner logs
