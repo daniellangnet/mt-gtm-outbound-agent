@@ -7,11 +7,11 @@ These instructions are focused on macOS and show how to run everything from the 
 ## Prerequisites (macOS)
 - Python 3.10+ installed (check with `python3 --version`).
 - Homebrew recommended to install Python if needed: `brew install python`.
+- Poetry installed (used as package manager)
 
 ## Setup
 1. Clone the repo and open the project directory in a terminal.
-2. Make sure you have `poetry` installed as a package manager
-3. Then run `poetry install` to active the virtual environment and install all the packages
+3. Run `poetry install` to install all the packages
 4. Environment variables:
    - Copy the sample env file and edit values:
      - `cp .env.sample .env`
@@ -19,6 +19,9 @@ These instructions are focused on macOS and show how to run everything from the 
 
 ## Developing
 All run commands below are executed from the repo root with the virtual environment activated.
+
+- Activate virtual environment
+  - `poetry env activate`
 
 - Start local Temporal Server
   - Use this method for local development. Make sure to use the localhost setings in your env file
