@@ -12,12 +12,19 @@ from workflows import SayHello
 load_dotenv()
 
 async def main():
-    temporal_address = os.getenv("TEMPORAL_ADDRESS", "localhost:7233")
-    temporal_namespace = os.getenv("TEMPORAL_NAMESPACE", "default")
-    temporal_task_queue = os.getenv("TEMPORAL_TASK_QUEUE", "hello-task-queue")
+    temporal_address = os.getenv("TEMPORAL_ADDRESS")
+    temporal_namespace = os.getenv("TEMPORAL_NAMESPACE")
+    temporal_api_key = os.getenv("TEMPORAL_API_KEY")
+    temporal_task_queue = os.getenv("TEMPORAL_TASK_QUEUE")
+    temporal_tls = os.getenv("TEMPORAL_TLS", "false").lower() == "true"
 
     print("Connecting to Temporal Service")
-    client = await Client.connect(temporal_address, namespace=temporal_namespace)
+    client = await Client.connect(
+        temporal_address,
+        namespace=temporal_namespace,
+        api_key=temporal_api_key,
+        tls=temporal_tls
+    )
 
     print("Run worker")
     worker = Worker(client, task_queue=temporal_task_queue, workflows=[SayHello], activities=[say_hello])
