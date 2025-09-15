@@ -6,9 +6,6 @@
 app = 'mt-gtm-outbound-agent'
 primary_region = 'iad'
 
-[build]
-  dockerfile = "Dockerfile"       # explicitly tell Fly to use your Dockerfile
-
 [env]
   PYTHONUNBUFFERED = "1"          # ensure logs are flushed immediately
 
