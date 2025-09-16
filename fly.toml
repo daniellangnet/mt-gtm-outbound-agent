@@ -29,4 +29,5 @@ primary_region = 'iad'
   cpus = 1
 
 [deploy]
-  release_command = "dbmate -u \"$DATABASE_URL\" up"
+  # this will automatically use DATABASE_URL env variable which is injected via Fly.io secrets
+  release_command = "dbmate up"
