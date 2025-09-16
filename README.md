@@ -1,25 +1,53 @@
 # GTM Outbound Agent
 
-This repository contains a simple Temporal worker and workflow that we use for outbound GTM purposes. 
+This is our AI-based outbound go-to-market agent. The goal is to do a bunch of BDR work autonomously and support our lead generation efforts.
 
-These instructions are focused on macOS and show how to run everything from the project root using `python -m`.
+This is very much a work-in-progress and given the uncertain nature of this project, we expect to rapidly evolve and experiment here. Because of that, there's a good chance that this README is outdated at any time. So here we're basically trying to describe the overall goals and architecture.
+
+How it works:
+- Start with a list of target accounts
+  - These will live in a Postgres database for now
+  - Later on, we might automatically feed them from Snowflake, or have a simple web interface
+- Research these target accounts using LLM calls
+  - This could include using web tools (from OpenAI for example) to find interesting pieces of information on the website, Instagram, etc
+- Draft outbound messages
+  - (unclear at this point if we do only email or also try SMS)
+- Have a human-in-the-loop step to review & approve draft messages
+  - (unclear as of now if we'll build a simple web interface ourselves or use something like Superblocks)
+- Send approved messages using a service such as Sendgrid or Twilio
+  - Sending will be done from a BDR-like persona with a real looking email address
+  - For email, we plan to use a different domain so as to not get in trouble in case we get spam reports
+
+Technical architecture:
+- Fully written in Python
+- Using Temporal.io (cloud service) for orchestration and "durable execution"
+- Using Neon Postgres as an application database (where we maintain state, draft messages, etc)
 
 ## Prerequisites (macOS)
 - Python 3.10+ installed (check with `python3 --version`).
-- Homebrew recommended to install Python if needed: `brew install python`.
-- Poetry installed (used as package manager)
+  - `brew install python`. 
+- Pipx installed
+  - Used to install Python CLI applications globally (such as Poetry)
+  - `brew install pipx`
+- Poetry installed
+  - Package manager that we use instead of Pip (works better many reasons)
+  - `pipx install poetry`
+- dbmate installed
+  - Simple database migration tool that we use. Needed for local development
+  - `brew install dbmate`
+- Flyctl installed
+  - We're hosting on Fly.io. To deploy & view logs from terminal you'll neet flyctl
+  - `brew install flyctl`
+- Local Postgres server for development
 
 ## Setup
-1. Clone the repo and open the project directory in a terminal.
-3. Run `poetry install` to install all the packages
-4. Environment variables:
-   - Copy the sample env file and edit values:
+1. Run `poetry install` to install all the packages
+2. Environment variables:
+   - Copy the sample env file:
      - `cp .env.sample .env`
-   - Update `.env` with your Temporal settings (address, namespace, API key, task queue, TLS flag, etc.).
+   - Update `.env` with your settings (local Postgres database, etc)
 
 ## Developing
-All run commands below are executed from the repo root with the virtual environment activated.
-
 - Activate virtual environment
   - `poetry env activate`
 
@@ -33,13 +61,20 @@ All run commands below are executed from the repo root with the virtual environm
 - Run the sample workflow (invokes SayHello via the client):
   - `python -m scripts.run_workflow`
 
+## Migrations
+We're using dbmate for simple, raw SQL database migrations.
+
+Usage:
+- To create a new migration: `dbmate new create_users`
+  - This will create a new file in `db/migrations/` that you can then edit
+- Run migrations: `dbmate up`
+  - Locally you have to run migrations manually against the development database
+    - It will automatically read the DATABASE_URL from your local `.env` file
+  - We automatically run migrations once per Fly.io deploy
+    - See `Dockerfile` for how we download the dbmate binary and `fly.toml` for the release command
+
 ## Deploying
-- We use Fly.io for hosting
-- Install using `brew install flyctl`
+We use Fly.io for hosting
+- Deploy using `fly deploy`
 
 You should see logs indicating a connection to the Temporal service, then worker activity and workflow execution. The workflow result will be printed to the console.
-
-## Tips
-- Make sure the worker is running before you execute the workflow command, so the workflow can be picked up and completed.
-- If you change dependencies, re-run `python -m pip install -r requirements.txt`.
-- To deactivate the virtual environment later, run `deactivate`.

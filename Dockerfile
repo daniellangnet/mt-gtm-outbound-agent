@@ -38,6 +38,10 @@ COPY --from=builder /app /app
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
+# Add dbmate
+ADD https://github.com/amacneil/dbmate/releases/download/v2.28.0/dbmate-linux-amd64 /usr/local/bin/dbmate
+RUN chmod +x /usr/local/bin/dbmate
+
 # Expose ports for FastAPI
 EXPOSE 8080
 
