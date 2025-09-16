@@ -22,6 +22,7 @@ Technical architecture:
 - Fully written in Python
 - Using Temporal.io (cloud service) for orchestration and "durable execution"
 - Using Neon Postgres as an application database (where we maintain state, draft messages, etc)
+- Uses Fly.io for hosting and Github Action to deploy from `master` branch
 
 ## Prerequisites (macOS)
 - Python 3.10+ installed (check with `python3 --version`).
@@ -74,7 +75,6 @@ Usage:
     - See `Dockerfile` for how we download the dbmate binary and `fly.toml` for the release command
 
 ## Deploying
-We use Fly.io for hosting
-- Deploy using `fly deploy`
+We're using Github Actions to automatically deploy from the `master` branch. This will also run database migrations. 
 
-You should see logs indicating a connection to the Temporal service, then worker activity and workflow execution. The workflow result will be printed to the console.
+If there's any need to deploy from local to Fly.io, you can run the `fly deploy` command while being authenticated.
