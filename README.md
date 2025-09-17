@@ -62,6 +62,8 @@ Technical architecture:
 - Run the sample workflow (invokes SayHello via the client):
   - `python -m scripts.run_workflow`
 
+- For quick & easy local development, you can use a dev harness like `python -m scripts.dev` 
+
 ## Migrations
 We're using dbmate for simple, raw SQL database migrations.
 
